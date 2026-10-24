@@ -1,0 +1,1 @@
+Wonky Badger website — full seven-page edition. Upload all HTML files, style.css and the entire assets/ directory to the ROOT of your GitHub Pages repository. The image files are necessary for the design.
