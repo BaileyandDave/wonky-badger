@@ -68,7 +68,44 @@
           link_text: (link.textContent || link.getAttribute('aria-label') || '').trim().slice(0, 100),
           transport_type: 'beacon'
         });
+        if (url.hostname === 'ditto.fm' && url.pathname.replace(/\/$/, '') === '/when-christmas-was-forever') {
+          window.gtag('event', 'spotify_presave_click', {
+            song_title: 'When Christmas Was Forever',
+            link_url: url.href,
+            transport_type: 'beacon'
+          });
+        }
       });
+    });
+    // Track meaningful Reel interactions, only if analytics consent was accepted.
+    document.querySelectorAll('video').forEach(video => {
+      const source = video.querySelector('source');
+      const fileName = source ? source.getAttribute('src') || '' : video.currentSrc || '';
+      if (!fileName.includes('Wonky_Badger_Website_Video.mp4')) return;
+      let milestones = new Set();
+      function track(action, percent) {
+        if (!enabled || typeof window.gtag !== 'function') return;
+        window.gtag('event', action, {
+          video_title: 'When Christmas Was Forever — Christmas Reel',
+          video_percent: percent,
+          video_duration: Number.isFinite(video.duration) ? Math.round(video.duration) : undefined
+        });
+      }
+      video.addEventListener('play', () => {
+        if (video.currentTime < 1) milestones = new Set();
+        track('christmas_reel_play', 0);
+      });
+      video.addEventListener('timeupdate', () => {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+        const percent = Math.floor(100 * video.currentTime / video.duration);
+        [25, 50, 75].forEach(mark => {
+          if (percent >= mark && !milestones.has(mark)) {
+            milestones.add(mark);
+            track('christmas_reel_progress', mark);
+          }
+        });
+      });
+      video.addEventListener('ended', () => track('christmas_reel_complete', 100));
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
