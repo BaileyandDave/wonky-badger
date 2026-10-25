@@ -31,3 +31,9 @@ footer{padding:25px 4%;background:#051226;display:flex;justify-content:space-bet
 .wb-cookie-actions #wb-accept{background:#f8d78c;color:#081426}.wb-cookie-actions button:focus-visible,.wb-cookie-settings:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .wb-cookie-settings{border:0;background:transparent;color:#f8d78c;cursor:pointer;text-decoration:underline;padding:4px;font-size:.85rem}
 @media(max-width:550px){#wb-cookie-banner{bottom:8px;left:8px;right:8px;padding:15px}.wb-cookie-actions{width:100%}.wb-cookie-actions button{flex:1 1 130px}}
+
+/* Cross-platform follow links, available on every page */
+.social-links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.social-button{display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;border:1px solid #e6c579;border-radius:999px;color:#f8d78c;background:#0b1b32;font-size:.85rem;font-weight:700;min-height:42px}
+.social-button:hover,.social-button:focus-visible{background:#f8d78c;color:#071428;outline-offset:3px}
+@media(max-width:550px){.social-links{width:100%}.social-button{flex:1 1 auto;padding:10px}}
