@@ -62,6 +62,15 @@
         let url;
         try { url = new URL(link.href, window.location.href); } catch (_) { return; }
         if (url.origin === window.location.origin || !/^https?:$/.test(url.protocol)) return;
+        const socialPlatform = link.getAttribute('data-social-platform');
+        if (socialPlatform) {
+          window.gtag('event', 'social_profile_click', {
+            social_platform: socialPlatform,
+            link_url: url.href,
+            page_location: window.location.href,
+            transport_type: 'beacon'
+          });
+        }
         window.gtag('event', 'outbound_music_link_click', {
           link_url: url.href,
           link_domain: url.hostname,
